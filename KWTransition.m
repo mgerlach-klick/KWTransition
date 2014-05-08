@@ -452,19 +452,21 @@
 			(self.action == KWTransitionStepDismiss && (self.settings & KWTransitionSettingReverse))) {
 			[inView addSubview:toVC.view];
 			
-			fromVC.view.frame = fromRect;
-			toVC.view.frame = inView.frame;
+			CGRect fullScreen = CGRectMake(0, 0, 1024, 768);
+			fromVC.view.frame = fullScreen;
+			toVC.view.frame = fullScreen;
 
 			[self addOverlayAToView:fromVC.view];
 			
-			CGPoint center = inView.center;
+			CGPoint center = CGPointMake(512, 384);
+			
 			if (self.settings & KWTransitionSettingDirectionRight) {
 				center.x += CGRectGetWidth(fromVC.view.bounds);
 			} else if (self.settings & KWTransitionSettingDirectionLeft) {
 				center.x -= CGRectGetWidth(fromVC.view.bounds);
 			}
 			if (self.settings & KWTransitionSettingDirectionDown) {
-				center.y += CGRectGetHeight(fromVC.view.bounds);
+				center.y += CGRectGetWidth(fromVC.view.bounds);
 			} else if (self.settings & KWTransitionSettingDirectionUp) {
 				center.y -= CGRectGetHeight(fromVC.view.bounds);
 			}
@@ -475,7 +477,7 @@
 			[UIView animateKeyframesWithDuration:.5f delay:0.f options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
 				[UIView addKeyframeWithRelativeStartTime:0.f relativeDuration:.5f animations:^{
 					self.overlayViewA.alpha = 0.3f;
-					toVC.view.center = inView.center;
+					toVC.view.center =  CGPointMake(512, 384);
 				}];
 				[UIView addKeyframeWithRelativeStartTime:0.5f relativeDuration:.5f animations:^{
 					self.overlayViewA.alpha = 0.0f;
@@ -490,9 +492,10 @@
 		} else {
 			[inView addSubview:toVC.view];
 			[inView bringSubviewToFront:fromVC.view];
-			
-			fromVC.view.frame = fromRect;
-			toVC.view.frame = inView.frame;
+
+			CGRect fullScreen = CGRectMake(0, 0, 1024, 768);
+			fromVC.view.frame = fullScreen;
+			toVC.view.frame = fullScreen;
 
 			[self addOverlayAToView:toVC.view];
 			
@@ -505,14 +508,14 @@
 				[UIView addKeyframeWithRelativeStartTime:0.5f relativeDuration:.5f animations:^{
 					self.overlayViewA.alpha = 0.0f;
 					
-					CGPoint center = inView.center;
+					CGPoint center = CGPointMake(512, 384);;
 					if (self.settings & KWTransitionSettingDirectionRight) {
 						center.x += CGRectGetWidth(fromVC.view.bounds);
 					} else if (self.settings & KWTransitionSettingDirectionLeft) {
 						center.x -= CGRectGetWidth(fromVC.view.bounds);
 					}
 					if (self.settings & KWTransitionSettingDirectionDown) {
-						center.y += CGRectGetHeight(fromVC.view.bounds);
+						center.y += CGRectGetWidth(fromVC.view.bounds);
 					} else if (self.settings & KWTransitionSettingDirectionUp) {
 						center.y -= CGRectGetHeight(fromVC.view.bounds);
 					}
